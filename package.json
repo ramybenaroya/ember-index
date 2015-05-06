@@ -37,7 +37,13 @@
     "ember-addon"
   ],
   "dependencies": {
-    "ember-cli-babel": "^5.0.0"
+    "broccoli-file-remover": "^0.3.1",
+    "broccoli-funnel": "^0.2.3",
+    "broccoli-merge-trees": "^0.2.1",
+    "broccoli-rename-files": "0.0.3",
+    "colors": "^1.1.0",
+    "ember-cli-babel": "^5.0.0",
+    "object-assign": "^2.0.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
