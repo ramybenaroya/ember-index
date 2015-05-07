@@ -6,11 +6,12 @@ var path = require('path');
 var util = require('util');
 
 var renameFiles = require('broccoli-rename-files');
-var assign = require('object-assign');
 var mergeTrees = require('broccoli-merge-trees');
 var funnel = require('broccoli-funnel');
 var removeFiles = require('broccoli-file-remover');
 var replaceString = require('broccoli-string-replace');
+
+var assign = require('object-assign');
 var colors = require('colors');
 
 var MARKER_PREFIX = 'ember-index';
