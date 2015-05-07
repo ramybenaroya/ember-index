@@ -17,35 +17,10 @@ var MARKER_PREFIX = 'ember-index';
 
 module.exports = {
 	name: 'ember-index',
-	defaultOptions: {
-		enabled: true,
-		content: [],
-		output: null,
-	},
 
 	contentFor: function(type, config) {
-		var contentId;
-		if (/^ember-index/.test(type)) {
-			if (type === 'ember-index') {
-				contentId = 'default';
-			} else {
-				contentId = type.substring('ember-index-'.length, type.length);
-			}
-		}
-		return this._cachedStrings[contentId];
-	},
-
-	included: function(app) {
-		this._super.included.apply(this, arguments);
-		this.options = assign({}, this.defaultOptions, (app.options['ember-index'] || {}));
-
-		this.options.content = util.isArray(this.options.content) ? this.options.content : (this.options.content ? [assign({
-			id: 'default'
-		}, this.options.content)] : []);
-
-		this.validateOptions();
-
-		this._cachedStrings = {};
+		var contentId,
+			strings;
 
 		if (this.options.enabled && this.options.content) {
 			this.options.content.forEach(function(content) {
@@ -54,7 +29,7 @@ module.exports = {
 					auxTree,
 					contentFilePath;
 
-				auxTree = funnel(app.options.trees.app, {
+				auxTree = funnel(this.app.options.trees.app, {
 					srcDir: '.',
 					files: [content.file],
 					destDir: '.'
@@ -62,12 +37,32 @@ module.exports = {
 
 				contentFilePath = path.join(auxTree.inputTree, content.file);
 				if (fs.existsSync(contentFilePath)) {
-					this._cachedStrings[content.id] = startMarker + fs.readFileSync(contentFilePath) + endMarker;
+					strings[content.id] = startMarker + fs.readFileSync(contentFilePath) + endMarker;
 				} else {
 					console.error(('ember-index addon: Cannot find ' + contentFilePath).red);
 				}
 			}.bind(this));
 		}
+
+		if (/^ember-index/.test(type)) {
+			if (type === 'ember-index') {
+				contentId = 'default';
+			} else {
+				contentId = type.substring('ember-index-'.length, type.length);
+			}
+		}
+		return strings[contentId];
+	},
+
+	included: function(app) {
+		this._super.included.apply(this, arguments);
+		this.options = assign({}, this._defaultOptions, (app.options['ember-index'] || {}));
+
+		this.options.content = util.isArray(this.options.content) ? this.options.content : (this.options.content ? [assign({
+			id: 'default'
+		}, this.options.content)] : []);
+
+		this.validateOptions();
 	},
 
 	postprocessTree: function(type, tree) {
@@ -129,6 +124,12 @@ module.exports = {
 		if (this.options.output === 'index.html') {
 			throw new Error('ember-index: Output file name cannot be \'index.html\'');
 		}
+	},
+
+	_defaultOptions: {
+		enabled: true,
+		content: [],
+		output: null,
 	},
 
 	_startMarkerPrefix: MARKER_PREFIX + '-start-' + new Date().getTime(),

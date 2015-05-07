@@ -1,4 +1,4 @@
-/* jshint node: true */
+ /* jshint node: true */
 /* global require, module */
 
 var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
@@ -9,7 +9,7 @@ var app = new EmberAddon({
 			id: '1',
 			file: 'file1.txt',
 			includeInOutput: false,
-			includeInIndexHtml: false
+			includeInIndexHtml: true
 		},{
 			id: '2',
 			file: 'file2.txt',
