@@ -3,7 +3,27 @@
 
 var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
-var app = new EmberAddon();
+var app = new EmberAddon({
+	'ember-index' : {
+		content: [{
+			id: '1',
+			file: 'file1.txt',
+			includeInOutput: false,
+			includeInIndexHtml: false
+		},{
+			id: '2',
+			file: 'file2.txt',
+			includeInOutput: true,
+			includeInIndexHtml: true
+		},{
+			id: '3',
+			file: 'file3.txt',
+			includeInOutput: true,
+			includeInIndexHtml: false
+		}],
+		output: 'index.jsp'
+	}
+});
 
 // Use `app.import` to add additional libraries to the generated
 // output files.
