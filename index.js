@@ -21,7 +21,7 @@ module.exports = {
 
 	contentFor: function(type, config) {
 		var contentId,
-			strings;
+			strings = {};
 
 		if (this.options.enabled && this.options.content) {
 			this.options.content.forEach(function(content) {
