@@ -125,8 +125,8 @@ module.exports = {
 		return returnedTree;
 	},
 
-	validateOptions: function(){
-		if (this.options.output === 'index.html'){
+	validateOptions: function() {
+		if (this.options.output === 'index.html') {
 			throw new Error('ember-index: Output file name cannot be \'index.html\'');
 		}
 	},
