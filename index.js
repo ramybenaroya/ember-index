@@ -93,7 +93,7 @@ module.exports = {
 				var startMarker = this._getStartMarker(content.id);
 				var endMarker = this._getEndMarker(content.id);
 				var markersRegExp = new RegExp('(' + startMarker + '|' + endMarker + ')', 'g');
-				var injectedContentRegExp = new RegExp(startMarker + '(.*)' + endMarker, 'g');
+				var injectedContentRegExp = new RegExp(startMarker + '(.|\\s)*' + endMarker, 'g');
 
 				renamedIndexTree = replaceString(renamedIndexTree, {
 					files: [this.options.output],
