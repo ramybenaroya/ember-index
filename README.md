@@ -8,6 +8,7 @@ Ember addon for manipulating index.html
 
 * `npm i ember-index --save-dev`
 
+
 ##Usage
 
 The following code:
