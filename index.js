@@ -22,7 +22,6 @@ module.exports = {
 	contentFor: function(type, config) {
 		var contentId,
 			strings = {};
-
 		if (this.options.enabled && this.options.content) {
 			this.options.content.forEach(function(content) {
 				var startMarker = this._getStartMarker(content.id),
@@ -52,7 +51,7 @@ module.exports = {
 				contentId = type.substring('ember-index-'.length, type.length);
 			}
 		}
-		return strings[contentId];
+		return strings[contentId] || '';
 	},
 
 	included: function(app) {
@@ -93,7 +92,7 @@ module.exports = {
 				var startMarker = this._getStartMarker(content.id);
 				var endMarker = this._getEndMarker(content.id);
 				var markersRegExp = new RegExp('(' + startMarker + '|' + endMarker + ')', 'g');
-				var injectedContentRegExp = new RegExp(startMarker + '(.|\\s)*' + endMarker, 'g');
+				var injectedContentRegExp = new RegExp(startMarker + '([\\s\\S])*' + endMarker, 'g');
 
 				renamedIndexTree = replaceString(renamedIndexTree, {
 					files: [this.options.output],
@@ -113,7 +112,7 @@ module.exports = {
 
 			}, this);
 
-			returnedTree = mergeTrees([tree, indexTree, renamedIndexTree], {
+			returnedTree = mergeTrees([tree, renamedIndexTree, indexTree], {
 				overwrite: true
 			});
 		}
