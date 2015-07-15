@@ -84,7 +84,7 @@ module.exports = {
 
 			indexTree = funnel(tree, {
 				srcDir: '.',
-				files: ['index.html'],
+				files: ['index.html', 'tests/index.html'],
 				destDir: '.'
 			});
 
@@ -103,7 +103,7 @@ module.exports = {
 				});
 
 				indexTree = replaceString(indexTree, {
-					files: ['index.html'],
+					files: ['index.html', 'tests/index.html'],
 					pattern: {
 						match: content.includeInIndexHtml ? markersRegExp : injectedContentRegExp,
 						replacement: ''
