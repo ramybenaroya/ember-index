@@ -7,21 +7,31 @@ var app = new EmberAddon({
 	'ember-index' : {
 		content: [{
 			id: '1',
-			file: 'file1.txt',
+			file: '_emberIndexContent/file1.txt',
 			includeInOutput: false,
 			includeInIndexHtml: true
 		},{
 			id: '2',
-			file: 'file2.txt',
+			file: '_emberIndexContent/file2.txt',
 			includeInOutput: true,
 			includeInIndexHtml: true
 		},{
 			id: '3',
-			file: 'file3.txt',
+			file: '_emberIndexContent/file3.txt',
 			includeInOutput: true,
 			includeInIndexHtml: false
+		},{
+			id: '4',
+			file: '_emberIndexContent/file3.txt',
+			includeInOutput: true,
+			includeInIndexHtml: false
+		},{
+			id: 'coloring-script',
+			file: '_emberIndexContent/coloring-script.txt',
+			includeInOutput: false,
+			includeInIndexHtml: true
 		}],
-		output: 'index.jsp'
+		output: 'index2.html'
 	}
 });
 

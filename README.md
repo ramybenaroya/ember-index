@@ -72,5 +72,8 @@ Will result
 </html>
 ```
 
+## Tests
+`npm run test`
+
 ## License
 MIT

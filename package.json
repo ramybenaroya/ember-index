@@ -1,7 +1,7 @@
 {
   "name": "ember-index",
   "version": "0.0.4",
-  "description": "Ember addon for manipulating index.html",
+  "description": "Ember addon for manipulating index.html.",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -9,29 +9,34 @@
   "scripts": {
     "start": "ember server",
     "build": "ember build",
-    "test": "ember try:testall"
+    "test": "ember try:testall && npm run test-mocha",
+    "test-mocha": "mocha tests/**/*-test-node.js"
   },
-  "repository": "https://github.com/ramybenaroya/ember-index",
+  "repository": "The default blueprint for ember-cli addons.",
   "engines": {
     "node": ">= 0.10.0"
   },
   "author": "Ramy Ben Aroya",
   "license": "MIT",
   "devDependencies": {
+    "broccoli": "^0.16.4",
     "broccoli-asset-rev": "^2.0.2",
-    "ember-cli": "0.2.3",
-    "ember-cli-app-version": "0.3.3",
-    "ember-cli-content-security-policy": "0.4.0",
-    "ember-cli-dependency-checker": "0.0.8",
-    "ember-cli-htmlbars": "0.7.4",
-    "ember-cli-ic-ajax": "0.1.1",
+    "chai": "^3.0.0",
+    "ember-cli": "1.13.1",
+    "ember-cli-app-version": "0.4.0",
+    "ember-cli-dependency-checker": "^1.0.0",
+    "ember-cli-htmlbars": "0.7.9",
+    "ember-cli-htmlbars-inline-precompile": "^0.1.1",
+    "ember-cli-ic-ajax": "0.2.1",
     "ember-cli-inject-live-reload": "^1.3.0",
-    "ember-cli-qunit": "0.3.10",
-    "ember-cli-uglify": "1.0.1",
-    "ember-data": "1.0.0-beta.16.1",
-    "ember-export-application-global": "^1.0.2",
+    "ember-cli-qunit": "0.3.15",
+    "ember-cli-release": "0.2.3",
+    "ember-cli-uglify": "^1.0.1",
     "ember-disable-prototype-extensions": "^1.0.0",
-    "ember-try": "0.0.4"
+    "ember-disable-proxy-controllers": "^1.0.0",
+    "ember-export-application-global": "^1.0.2",
+    "ember-try": "0.0.6",
+    "mocha": "^2.2.5"
   },
   "keywords": [
     "ember-addon"
@@ -41,10 +46,10 @@
     "broccoli-funnel": "^0.2.3",
     "broccoli-merge-trees": "^0.2.1",
     "broccoli-rename-files": "0.0.3",
-    "broccoli-string-replace": "0.0.2",
-    "colors": "^1.1.0",
+    "broccoli-string-replace": "^0.1.0",
+    "colors": "^1.1.2",
     "ember-cli-babel": "^5.0.0",
-    "object-assign": "^2.0.0"
+    "object-assign": "^3.0.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
