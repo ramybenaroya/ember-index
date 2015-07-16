@@ -1,6 +1,6 @@
 {
   "name": "ember-index",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Ember addon for manipulating index.html.",
   "directories": {
     "doc": "doc",
@@ -12,7 +12,7 @@
     "test": "ember try:testall && npm run test-mocha",
     "test-mocha": "mocha tests/**/*-test-node.js"
   },
-  "repository": "The default blueprint for ember-cli addons.",
+  "repository": "https://github.com/ramybenaroya/ember-index",
   "engines": {
     "node": ">= 0.10.0"
   },
