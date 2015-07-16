@@ -1,0 +1,14 @@
+<script>
+	(function(global, $){
+		
+		$(function(){
+			var config = global.requireModule('dummy/config/environment')['default'],
+				color = config.coloringScript.color,
+				rootElement = config.APP.rootElement || 'body';
+
+			$(rootElement).css('background-color', color);
+		});
+		
+
+	})(this, jQuery);
+</script>
