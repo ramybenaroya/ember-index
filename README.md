@@ -1,4 +1,8 @@
-# Ember-index [![Build Status](https://travis-ci.org/ramybenaroya/ember-index.svg?branch=master)](https://travis-ci.org/ramybenaroya/ember-index)
+# Ember-index 
+
+[![npm version](https://badge.fury.io/js/ember-index.svg)](http://badge.fury.io/js/ember-index)
+[![Build Status](https://travis-ci.org/ramybenaroya/ember-index.svg?branch=master)](https://travis-ci.org/ramybenaroya/ember-index) 
+[![Ember Observer Score](http://emberobserver.com/badges/ember-index.svg)](http://emberobserver.com/addons/ember-index) 
 
 Ember addon for manipulating index.html
 
