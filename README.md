@@ -9,7 +9,7 @@ Ember addon for manipulating index.html
 ## Why use it?
 Ember cli is doing a great job at generating static assets including `index.html`.
 But sometimes you wish to generate an enhanced index file which is actually a server-page (JSP, PHP etc.).  
-In order to that, you will need to include specific code blocks in the generated server-page, which won't  be included in the generated index.html (and vice versa).  
+In order to do so, you will need to include specific code blocks in the generated server-page, which won't  be included in the generated index.html (and vice versa).  
 This simple addon is meant for doing exactly this.
 
 ## [Project's Wiki](https://github.com/ramybenaroya/ember-index/wiki)
