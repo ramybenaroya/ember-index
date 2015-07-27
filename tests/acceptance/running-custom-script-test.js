@@ -15,7 +15,7 @@ module('Acceptance | running custom script', {
   }
 });
 
-test('visiting /running-custom-script', function(assert) {
+test('visiting /', function(assert) {
   visit('/');
 
   andThen(function() {
