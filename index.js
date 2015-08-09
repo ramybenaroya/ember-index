@@ -48,7 +48,7 @@ module.exports = {
 
 	included: function(app) {
 		this._super.included.apply(this, arguments);
-		this.options = assign({}, this._defaultOptions, (this.app.project.config(app.env)['ember-index'] || app.options['ember-index'] || {}));
+		this.options = assign({}, this._defaultOptions, (app.options['ember-index'] || this.app.project.config(app.env)['ember-index'] || {}));
 
 		this.options.content = util.isArray(this.options.content) ? this.options.content : (this.options.content ? [assign({
 			id: 'default'

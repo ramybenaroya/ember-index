@@ -36,7 +36,7 @@ describe('Addon', function() {
         var contentFor;
         var addon;
 
-        it('returns proper for single content-for tag', function() {
+        it('returns proper content for a single "content-for" tag', function() {
             addon = getEmberIndexAddon({
                 'ember-index': {
                     content: {
@@ -51,7 +51,7 @@ describe('Addon', function() {
             expect(contentFor).to.be.equal(addon._startMarkerPrefix + '-default' + '<!-- content from file1 -->' + addon._endMarkerPrefix + '-default');
         });
 
-        it('returns proper for multiple content-for tags', function() {
+        it('returns proper content for multiple "content-for" tags', function() {
             addon = getEmberIndexAddon({
                 'ember-index': {
                     content: [{
