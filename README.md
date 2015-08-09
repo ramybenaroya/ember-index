@@ -23,26 +23,32 @@ This simple addon is meant for doing exactly this.
 
 The following code:
 ```javascript
-// Brocfile.js
-var EmberAddon = require('ember-cli/lib/broccoli/ember-app');
-var app = new EmberApp({
+// config/enironment.js
+
+module.exports = function(environment) {
+  var ENV = {
+    //...
+
     'ember-index': {
-        output: 'index.jsp'
-        content: [{
-            id: '1'
-            file: 'example1.txt',
-            includeInIndexHtml: true,
-            includeInOutput: false
-        },{
-            id: '2'
-            file: 'example2.txt',
-            includeInIndexHtml: false
-            includeInOutput: true
-            
-        }]
+      output: 'index.jsp'
+      content: [{
+        id: '1'
+        file: 'example1.txt',
+        includeInIndexHtml: true,
+        includeInOutput: false
+      },{
+        id: '2'
+        file: 'example2.txt',
+        includeInIndexHtml: false
+        includeInOutput: true
+      }]
     }
-});
-module.exports = app.toTree();
+  };
+
+  //...
+
+  return ENV;
+};
 ```
 ```
 // app/example1.txt
