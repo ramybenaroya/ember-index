@@ -60,7 +60,12 @@ module.exports = {
 	postprocessTree: function(type, tree) {
 		var returnedTree = tree,
 			renamedIndexTree,
-			indexTree;
+			indexTree,
+			indexFiles = ['index.html'];
+
+		if (this.app.env !== 'production'){
+			indexFiles.push('tests/index.html');
+		}
 
 		if (this.options.enabled && this.options.output && type === 'all') {
 
@@ -76,7 +81,7 @@ module.exports = {
 
 			indexTree = funnel(tree, {
 				srcDir: '.',
-				files: ['index.html', 'tests/index.html'],
+				files: indexFiles,
 				destDir: '.'
 			});
 
@@ -95,7 +100,7 @@ module.exports = {
 				});
 
 				indexTree = replaceString(indexTree, {
-					files: ['index.html', 'tests/index.html'],
+					files: indexFiles,
 					pattern: {
 						match: content.includeInIndexHtml ? markersRegExp : injectedContentRegExp,
 						replacement: ''
