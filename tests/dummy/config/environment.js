@@ -22,27 +22,27 @@ module.exports = function(environment) {
     },
     'ember-index': {
       content: [{
-        id: '1',
+        key: '1',
         file: '_emberIndexContent/file1.txt',
         includeInOutput: false,
         includeInIndexHtml: true
       }, {
-        id: '2',
+        key: '2',
         file: '_emberIndexContent/file2.txt',
         includeInOutput: true,
         includeInIndexHtml: true
       }, {
-        id: '3',
+        key: '3',
         file: '_emberIndexContent/file3.txt',
         includeInOutput: true,
         includeInIndexHtml: false
       }, {
-        id: '4',
+        key: '4',
         file: '_emberIndexContent/file3.txt',
         includeInOutput: true,
         includeInIndexHtml: false
       }, {
-        id: 'coloring-script',
+        key: 'coloring-script',
         file: '_emberIndexContent/coloring-script.txt',
         includeInOutput: false,
         includeInIndexHtml: true

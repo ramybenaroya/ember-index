@@ -32,12 +32,12 @@ module.exports = function(environment) {
     'ember-index': {
       output: 'index.jsp'
       content: [{
-        id: '1'
+        key: '1'
         file: 'example1.txt',
         includeInIndexHtml: true,
         includeInOutput: false
       },{
-        id: '2'
+        key: '2'
         file: 'example2.txt',
         includeInIndexHtml: false
         includeInOutput: true

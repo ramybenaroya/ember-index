@@ -13,6 +13,7 @@ var replaceString = require('broccoli-string-replace');
 
 var assign = require('object-assign');
 var colors = require('colors');
+var deprecate = require('ember-cli/lib/utilities/deprecate');
 
 var MARKER_PREFIX = 'ember-index';
 
@@ -20,16 +21,19 @@ module.exports = {
 	name: 'ember-index',
 
 	contentFor: function(type, config) {
-		var contentId,
+		var contentKey,
 			strings = {};
 		if (this.options.enabled && this.options.content) {
 			this.options.content.forEach(function(content) {
-				var startMarker = this._getStartMarker(content.id),
-					endMarker = this._getEndMarker(content.id),
-					contentFilePath = path.join(this.app.project.root, this.app.options.trees.app, content.file);
+				var key = content.key || content.id;
+				var startMarker = this._getStartMarker(key);
+				var endMarker = this._getEndMarker(key);
+				var	contentFilePath = path.join(this.app.project.root, this.app.options.trees.app, content.file);
+
+				this._handleIdDepracation(content);
 				
 				if (fs.existsSync(contentFilePath)) {
-					strings[content.id] = startMarker + fs.readFileSync(contentFilePath) + endMarker;
+					strings[key] = startMarker + fs.readFileSync(contentFilePath) + endMarker;
 				} else {
 					console.error(('ember-index addon: Cannot find ' + contentFilePath).red);
 				}
@@ -38,12 +42,12 @@ module.exports = {
 
 		if (/^ember-index/.test(type)) {
 			if (type === 'ember-index') {
-				contentId = 'default';
+				contentKey = 'default';
 			} else {
-				contentId = type.substring('ember-index-'.length, type.length);
+				contentKey = type.substring('ember-index-'.length, type.length);
 			}
 		}
-		return strings[contentId] || '';
+		return strings[contentKey] || '';
 	},
 
 	included: function(app) {
@@ -51,7 +55,7 @@ module.exports = {
 		this.options = assign({}, this._defaultOptions, (app.options['ember-index'] || this.app.project.config(app.env)['ember-index'] || {}));
 
 		this.options.content = util.isArray(this.options.content) ? this.options.content : (this.options.content ? [assign({
-			id: 'default'
+			key: 'default'
 		}, this.options.content)] : []);
 
 		this.validateOptions();
@@ -86,10 +90,13 @@ module.exports = {
 			});
 
 			this.options.content.forEach(function(content) {
-				var startMarker = this._getStartMarker(content.id);
-				var endMarker = this._getEndMarker(content.id);
+				var key = content.key || content.id;
+				var startMarker = this._getStartMarker(key);
+				var endMarker = this._getEndMarker(key);
 				var markersRegExp = new RegExp('(' + startMarker + '|' + endMarker + ')', 'g');
 				var injectedContentRegExp = new RegExp(startMarker + '([\\s\\S])*' + endMarker, 'g');
+
+				this._handleIdDepracation(content);
 
 				renamedIndexTree = replaceString(renamedIndexTree, {
 					files: [this.options.output],
@@ -133,12 +140,21 @@ module.exports = {
 
 	_endMarkerPrefix: MARKER_PREFIX + '-end-' + new Date().getTime(),
 
-	_getStartMarker: function(id) {
-		return this._startMarkerPrefix + '-' + id;
+	_getStartMarker: function(key) {
+		return this._startMarkerPrefix + '-' + key;
 	},
 
-	_getEndMarker: function(id) {
-		return this._endMarkerPrefix + '-' + id;
-	}
+	_getEndMarker: function(key) {
+		return this._endMarkerPrefix + '-' + key;
+	},
+
+	_handleIdDepracation: function(content){
+		deprecate('ember-index: "id" property is depracated when defining multiple content entries. Please use "key" instead.', !!content.id && !this._didShowIdDeprecationWarning);
+		if (!this._didShowIdDeprecationWarning && !!content.id){
+			this._didShowIdDeprecationWarning = true;	
+		}
+	},
+
+	_didShowIdDeprecationWarning: false
 
 };

@@ -55,17 +55,17 @@ describe('Addon', function() {
             addon = getEmberIndexAddon({
                 'ember-index': {
                     content: [{
-                        id: '1',
+                        key: '1',
                         file: '_emberIndexContent/file1.txt',
                         includeInOutput: false,
                         includeInIndexHtml: true
                     }, {
-                        id: '2',
+                        key: '2',
                         file: '_emberIndexContent/file2.txt',
                         includeInOutput: false,
                         includeInIndexHtml: true
                     }, {
-                        id: '3',
+                        key: '3',
                         file: '_emberIndexContent/file3.txt',
                         includeInOutput: false,
                         includeInIndexHtml: true
@@ -141,22 +141,22 @@ describe('Addon', function() {
                 'ember-index': {
                     output: 'index.jsp',
                     content: [{
-                        id: '1',
+                        key: '1',
                         file: '_emberIndexContent/file1.txt',
                         includeInOutput: false,
                         includeInIndexHtml: false
                     }, {
-                        id: '2',
+                        key: '2',
                         file: '_emberIndexContent/file2.txt',
                         includeInOutput: true,
                         includeInIndexHtml: false
                     }, {
-                        id: '3',
+                        key: '3',
                         file: '_emberIndexContent/file3.txt',
                         includeInOutput: false,
                         includeInIndexHtml: true
                     },{
-                        id: '4',
+                        key: '4',
                         file: '_emberIndexContent/file4.txt',
                         includeInOutput: true,
                         includeInIndexHtml: true
