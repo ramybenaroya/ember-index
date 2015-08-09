@@ -26,16 +26,8 @@ module.exports = {
 			this.options.content.forEach(function(content) {
 				var startMarker = this._getStartMarker(content.id),
 					endMarker = this._getEndMarker(content.id),
-					auxTree,
-					contentFilePath;
-
-				auxTree = funnel(this.app.options.trees.app, {
-					srcDir: '.',
-					files: [content.file],
-					destDir: '.'
-				});
-
-				contentFilePath = path.join(auxTree.inputTree, content.file);
+					contentFilePath = path.join(this.app.project.root, this.app.options.trees.app, content.file);
+				
 				if (fs.existsSync(contentFilePath)) {
 					strings[content.id] = startMarker + fs.readFileSync(contentFilePath) + endMarker;
 				} else {
