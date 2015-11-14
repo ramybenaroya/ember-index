@@ -28,7 +28,15 @@ module.exports = {
 				var key = content.key || content.id;
 				var startMarker = this._getStartMarker(key);
 				var endMarker = this._getEndMarker(key);
-				var	contentFilePath = path.join(this.app.project.root, this.app.options.trees.app, content.file);
+				var rootPath = this.app.project.root;
+				var appPath = this.app.options.trees.app;
+				
+				if (appPath && typeof appPath.__broccoliGetInfo__ === 'function') {
+					appPath = appPath.__broccoliGetInfo__();
+					appPath = appPath.sourceDirectory || 'app';
+				}
+
+				var	contentFilePath = path.join(rootPath, appPath, content.file);
 
 				this._handleIdDepracation(content);
 				
