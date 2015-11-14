@@ -33,7 +33,11 @@ module.exports = {
 				
 				if (appPath && typeof appPath.__broccoliGetInfo__ === 'function') {
 					appPath = appPath.__broccoliGetInfo__();
-					appPath = appPath.sourceDirectory || 'app';
+					appPath = appPath && appPath.sourceDirectory
+				}
+
+				if (typeof appPath !== 'string') {
+					appPath = 'app';
 				}
 
 				var	contentFilePath = path.join(rootPath, appPath, content.file);
