@@ -30,6 +30,7 @@ module.exports = {
 				var endMarker = this._getEndMarker(key);
 				var rootPath = this.app.project.root;
 				var appPath = this.app.options.trees.app;
+				var	contentFilePath;
 				
 				if (appPath && typeof appPath.__broccoliGetInfo__ === 'function') {
 					appPath = appPath.__broccoliGetInfo__();
@@ -40,7 +41,11 @@ module.exports = {
 					appPath = 'app';
 				}
 
-				var	contentFilePath = path.join(rootPath, appPath, content.file);
+				if (new RegExp('^' + rootPath).test(appPath)){
+					contentFilePath = path.join(appPath, content.file);
+				} else {
+					contentFilePath = path.join(rootPath, appPath, content.file);
+				}
 
 				this._handleIdDepracation(content);
 				
