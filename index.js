@@ -41,7 +41,7 @@ module.exports = {
 					appPath = 'app';
 				}
 
-				if (new RegExp('^' + rootPath).test(appPath)){
+				if (new RegExp('^' + rootPath).test(appPath) || appPath.indexOf(appPath) === 0){
 					contentFilePath = path.join(appPath, content.file);
 				} else {
 					contentFilePath = path.join(rootPath, appPath, content.file);
