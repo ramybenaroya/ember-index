@@ -1,6 +1,6 @@
 {
   "name": "ember-index",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Ember addon for manipulating index.html.",
   "directories": {
     "doc": "doc",
