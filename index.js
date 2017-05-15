@@ -118,8 +118,10 @@ module.exports = {
 				this._handleIdDepracation(content);
 
 				if (this.options.output && renamedIndexTree) {
-					renamedIndexTree = replaceString(renamedIndexTree, {
-						files: [this.options.output],
+          var file = this.options.destDir ? [this.options.destDir + '/' + this.options.output] : [this.options.output];
+
+          renamedIndexTree = replaceString(renamedIndexTree, {
+						files: file,
 						pattern: {
 							match: content.includeInOutput ? markersRegExp : injectedContentRegExp,
 							replacement: ''
