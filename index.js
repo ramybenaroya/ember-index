@@ -31,7 +31,7 @@ module.exports = {
 				var rootPath = this.app.project.root;
 				var appPath = this.app.options.trees.app;
 				var	contentFilePath;
-				
+
 				if (appPath && typeof appPath.__broccoliGetInfo__ === 'function') {
 					appPath = appPath.__broccoliGetInfo__();
 					appPath = appPath && appPath.sourceDirectory
@@ -48,7 +48,7 @@ module.exports = {
 				}
 
 				this._handleIdDepracation(content);
-				
+
 				if (fs.existsSync(contentFilePath)) {
 					strings[key] = startMarker + fs.readFileSync(contentFilePath) + endMarker;
 				} else {
@@ -94,12 +94,12 @@ module.exports = {
 				renamedIndexTree = renameFiles(funnel(tree, {
 					srcDir: '.',
 					files: ['index.html'],
-					destDir: '.'
+					destDir: this.options.destDir || '.'
 				}), {
 					transformFilename: function() {
 						return this.options.output;
 					}.bind(this)
-				});	
+				});
 			}
 
 			indexTree = funnel(tree, {
@@ -116,7 +116,7 @@ module.exports = {
 				var injectedContentRegExp = new RegExp(startMarker + '([\\s\\S])*' + endMarker, 'g');
 
 				this._handleIdDepracation(content);
-				
+
 				if (this.options.output && renamedIndexTree) {
 					renamedIndexTree = replaceString(renamedIndexTree, {
 						files: [this.options.output],
@@ -124,7 +124,7 @@ module.exports = {
 							match: content.includeInOutput ? markersRegExp : injectedContentRegExp,
 							replacement: ''
 						}
-					});	
+					});
 				}
 
 				indexTree = replaceString(indexTree, {
@@ -152,9 +152,9 @@ module.exports = {
 	},
 
 	validateOptions: function() {
-		if (this.options.output === 'index.html') {
-			throw new Error('ember-index: Output file name cannot be \'index.html\'');
-		}
+    if (this.options.output === 'index.html' && (!this.options.destDir || this.options.destDir === '.')) {
+      throw new Error('ember-index: Output file name cannot be \'index.html\'');
+    }
 	},
 
 	_defaultOptions: {
@@ -178,7 +178,7 @@ module.exports = {
 	_handleIdDepracation: function(content){
 		deprecate('ember-index: "id" property is depracated when defining multiple content entries. Please use "key" instead.', !!content.id && !this._didShowIdDeprecationWarning);
 		if (!this._didShowIdDeprecationWarning && !!content.id){
-			this._didShowIdDeprecationWarning = true;	
+			this._didShowIdDeprecationWarning = true;
 		}
 	},
 

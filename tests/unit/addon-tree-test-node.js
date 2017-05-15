@@ -200,5 +200,35 @@ describe('Addon', function() {
 
                 });
         });
-    });
+
+        it('Use the destDir option correctly.', function() {
+          appTree = new EmberAddon({
+            'ember-index': {
+              destDir: 'export',
+              output: 'index.jsp',
+              content: [{
+                key: '1',
+                file: '_emberIndexContent/file1.txt',
+                includeInOutput: false,
+                includeInIndexHtml: false
+              }, {
+                key: '2',
+                file: '_emberIndexContent/file2.txt',
+                includeInOutput: true,
+                includeInIndexHtml: false
+              }]
+            }
+          }).toTree();
+
+          builder = new broccoli.Builder(appTree);
+          return builder.build()
+            .then(function(results) {
+              var outputPath = results.directory;
+              var indexJspPath = path.join(outputPath, 'export/index.jsp');
+
+              expect(fs.existsSync(indexJspPath)).to.be.equal(true);
+
+            });
+        });
+      });
 });
