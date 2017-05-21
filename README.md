@@ -30,17 +30,18 @@ module.exports = function(environment) {
     //...
 
     'ember-index': {
-      output: 'index.jsp'
+      output: 'index.jsp',
+      destDir: 'export', // Optional (default: '.')
       content: [{
-        key: '1'
+        key: '1',
         file: 'example1.txt',
         includeInIndexHtml: true,
-        includeInOutput: false
+        includeInOutput: false,
       },{
-        key: '2'
+        key: '2',
         file: 'example2.txt',
-        includeInIndexHtml: false
-        includeInOutput: true
+        includeInIndexHtml: false,
+        includeInOutput: true,
       }]
     }
   };
@@ -88,7 +89,7 @@ Will result
 </html>
 ```
 ```html
-<!-- dist/index.jsp -->
+<!-- dist/export/index.jsp -->
 <!DOCTYPE html>
 <html>
   <head>
