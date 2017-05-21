@@ -1,7 +1,7 @@
 # Master
 
 # 0.3.0
-- [ENHANCEMENT] Add `destDir` option for output file location (@DecayConstant)
+- [ENHANCEMENT] Add `destDir` option for output file location https://github.com/ramybenaroya/ember-index/pull/8 (@DecayConstant)
 
 # 0.2.9
 - [INTERNAL] Resolve minimatch deprecation warnings https://github.com/ramybenaroya/ember-index/pull/7 (@mike183)
