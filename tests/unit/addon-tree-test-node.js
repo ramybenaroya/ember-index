@@ -21,22 +21,22 @@ function findEmberIndex(app) {
     }
 }
 
-describe('Addon', function() {
+describe('Addon', function () {
     var builder;
 
     this.timeout(15000);
 
-    afterEach(function() {
+    afterEach(function () {
         if (builder) {
             return builder.cleanup();
         }
     });
 
-    describe('#contentFor', function() {
+    describe('#contentFor', function () {
         var contentFor;
         var addon;
 
-        it('returns proper content for a single "content-for" tag', function() {
+        it('returns proper content for a single "content-for" tag, replacing a file', function () {
             addon = getEmberIndexAddon({
                 'ember-index': {
                     content: {
@@ -51,7 +51,22 @@ describe('Addon', function() {
             expect(contentFor).to.be.equal(addon._startMarkerPrefix + '-default' + '<!-- content from file1 -->' + addon._endMarkerPrefix + '-default');
         });
 
-        it('returns proper content for multiple "content-for" tags', function() {
+        it('returns proper content for a single "content-for" tag, replacing a string', function () {
+            addon = getEmberIndexAddon({
+                'ember-index': {
+                    content: {
+                        string: '<!-- content from string -->',
+                        includeInOutput: false,
+                        includeInIndexHtml: true
+                    }
+                }
+            });
+            contentFor = addon.contentFor('ember-index');
+
+            expect(contentFor).to.be.equal(addon._startMarkerPrefix + '-default' + '<!-- content from string -->' + addon._endMarkerPrefix + '-default');
+        });
+
+        it('returns proper content for multiple "content-for" tags', function () {
             addon = getEmberIndexAddon({
                 'ember-index': {
                     content: [{
@@ -67,6 +82,12 @@ describe('Addon', function() {
                     }, {
                         key: '3',
                         file: '_emberIndexContent/file3.txt',
+                        includeInOutput: false,
+                        includeInIndexHtml: true
+                    },
+                    {
+                        key: '4',
+                        string: '<!-- content from string -->',
                         includeInOutput: false,
                         includeInIndexHtml: true
                     }]
@@ -84,15 +105,19 @@ describe('Addon', function() {
             contentFor = addon.contentFor('ember-index-3');
 
             expect(contentFor).to.be.equal(addon._startMarkerPrefix + '-3' + '<!-- content from file3 -->' + addon._endMarkerPrefix + '-3');
+
+            contentFor = addon.contentFor('ember-index-4');
+
+            expect(contentFor).to.be.equal(addon._startMarkerPrefix + '-3' + '<!-- content from string -->' + addon._endMarkerPrefix + '-3');
         });
     });
 
 
-    describe('#appTree', function() {
+    describe('#appTree', function () {
         var appTree;
         var dummyVar;
 
-        it('creates a simple clone of index.html', function() {
+        it('creates a simple clone of index.html', function () {
             appTree = new EmberAddon({
                 'ember-index': {
                     output: 'index.jsp'
@@ -101,7 +126,7 @@ describe('Addon', function() {
 
             builder = new broccoli.Builder(appTree);
             return builder.build()
-                .then(function(results) {
+                .then(function (results) {
                     var indexHtml, indexJsp,
                         outputPath = results.directory,
                         indexJspPath = path.join(outputPath, 'index.jsp'),
@@ -118,7 +143,7 @@ describe('Addon', function() {
                 });
         });
 
-        it('ember-index is disabled when enabled=false', function() {
+        it('ember-index is disabled when enabled=false', function () {
             appTree = new EmberAddon({
                 'ember-index': {
                     output: 'index.jsp',
@@ -128,7 +153,7 @@ describe('Addon', function() {
 
             builder = new broccoli.Builder(appTree);
             return builder.build()
-                .then(function(results) {
+                .then(function (results) {
                     var outputPath = results.directory,
                         indexJspPath = path.join(outputPath, 'index.jsp');
 
@@ -136,7 +161,7 @@ describe('Addon', function() {
                 });
         });
 
-        it('Insert content according to "includeInOutput" & "includeInIndexHtml"', function() {
+        it('Insert content according to "includeInOutput" & "includeInIndexHtml"', function () {
             appTree = new EmberAddon({
                 'ember-index': {
                     output: 'index.jsp',
@@ -155,9 +180,15 @@ describe('Addon', function() {
                         file: '_emberIndexContent/file3.txt',
                         includeInOutput: false,
                         includeInIndexHtml: true
-                    },{
+                    }, {
                         key: '4',
                         file: '_emberIndexContent/file4.txt',
+                        includeInOutput: true,
+                        includeInIndexHtml: true
+                    },
+                    {
+                        key: '5',
+                        string: '<!-- content from string -->',
                         includeInOutput: true,
                         includeInIndexHtml: true
                     }]
@@ -166,7 +197,7 @@ describe('Addon', function() {
 
             builder = new broccoli.Builder(appTree);
             return builder.build()
-                .then(function(results) {
+                .then(function (results) {
                     var indexHtml, indexJsp,
                         outputPath = results.directory,
                         indexJspPath = path.join(outputPath, 'index.jsp'),
@@ -174,9 +205,10 @@ describe('Addon', function() {
                         file1RegExp = /<!-- content from file1 -->/,
                         file2RegExp = /<!-- content from file2 -->/,
                         file3RegExp = /<!-- content from file3 -->/,
-                        file4RegExp = /<!-- content from file4 -->/;
+                        file4RegExp = /<!-- content from file4 -->/,
+                        stringRegExp = /<!-- content from string -->/;
 
-                        expect(fs.existsSync(indexJspPath)).to.be.equal(true);
+                    expect(fs.existsSync(indexJspPath)).to.be.equal(true);
 
                     indexJsp = fs.readFileSync(indexJspPath).toString();
                     indexHtml = fs.readFileSync(indexHtmlPath).toString();
@@ -197,38 +229,39 @@ describe('Addon', function() {
 
                     expect(file4RegExp.test(indexHtml)).to.be.equal(true);
 
+                    expect(stringRegExp.test(indexJsp)).to.be.equal(true);
 
+                    expect(stringRegExp.test(indexHtml)).to.be.equal(true);
                 });
         });
 
-        it('Use the destDir option correctly.', function() {
-          appTree = new EmberAddon({
-            'ember-index': {
-              destDir: 'export',
-              output: 'index.jsp',
-              content: [{
-                key: '1',
-                file: '_emberIndexContent/file1.txt',
-                includeInOutput: false,
-                includeInIndexHtml: false
-              }, {
-                key: '2',
-                file: '_emberIndexContent/file2.txt',
-                includeInOutput: true,
-                includeInIndexHtml: false
-              }]
-            }
-          }).toTree();
+        it('Use the destDir option correctly.', function () {
+            appTree = new EmberAddon({
+                'ember-index': {
+                    destDir: 'export',
+                    output: 'index.jsp',
+                    content: [{
+                        key: '1',
+                        file: '_emberIndexContent/file1.txt',
+                        includeInOutput: false,
+                        includeInIndexHtml: false
+                    }, {
+                        key: '2',
+                        file: '_emberIndexContent/file2.txt',
+                        includeInOutput: true,
+                        includeInIndexHtml: false
+                    }]
+                }
+            }).toTree();
 
-          builder = new broccoli.Builder(appTree);
-          return builder.build()
-            .then(function(results) {
-              var outputPath = results.directory;
-              var indexJspPath = path.join(outputPath, 'export/index.jsp');
+            builder = new broccoli.Builder(appTree);
+            return builder.build()
+                .then(function (results) {
+                    var outputPath = results.directory;
+                    var indexJspPath = path.join(outputPath, 'export/index.jsp');
 
-              expect(fs.existsSync(indexJspPath)).to.be.equal(true);
-
-            });
+                    expect(fs.existsSync(indexJspPath)).to.be.equal(true);
+                });
         });
-      });
+    });
 });
