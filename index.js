@@ -40,19 +40,27 @@ module.exports = {
 				if (typeof appPath !== 'string') {
 					appPath = 'app';
 				}
-
-				if (new RegExp('^' + rootPath).test(appPath) || (appPath.indexOf(':\\') !== -1 && appPath.indexOf(appPath) === 0)){
-					contentFilePath = path.join(appPath, content.file);
-				} else {
-					contentFilePath = path.join(rootPath, appPath, content.file);
-				}
+				
+				if(content.file) {
+					if (new RegExp('^' + rootPath).test(appPath) || (appPath.indexOf(':\\') !== -1 && appPath.indexOf(appPath) === 0)){
+						contentFilePath = path.join(appPath, content.file);
+					} else {
+						contentFilePath = path.join(rootPath, appPath, content.file);
+					}
+				}				
 
 				this._handleIdDepracation(content);
 
-				if (fs.existsSync(contentFilePath)) {
+				if (content.file && fs.existsSync(contentFilePath)) {
 					strings[key] = startMarker + fs.readFileSync(contentFilePath) + endMarker;
+				} else if(content.string && typeof content.string === 'string') {
+					strings[key] = content.string;
 				} else {
-					console.error(('ember-index addon: Cannot find ' + contentFilePath).red);
+					if(content.file) {
+						console.error(('ember-index addon: Cannot find ' + contentFilePath).red);						
+					} else {
+						console.error(('ember-index addon: No "file" or "string" property set for this item').red);	
+					}
 				}
 			}.bind(this));
 		}

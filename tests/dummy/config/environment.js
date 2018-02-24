@@ -41,12 +41,18 @@ module.exports = function(environment) {
         file: '_emberIndexContent/file3.txt',
         includeInOutput: true,
         includeInIndexHtml: false
+      },
+      {
+        key: '5',
+        string: 'My App Title',
+        includeInOutput: false,
+        includeInIndexHtml: true
       }, {
         key: 'coloring-script',
         file: '_emberIndexContent/coloring-script.txt',
         includeInOutput: false,
         includeInIndexHtml: true
-      }],
+      },],
       output: 'index2.html'
     }
   };
