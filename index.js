@@ -93,7 +93,7 @@ module.exports = {
 			treesToMerge = [],
 			indexFiles = ['index.html'];
 
-		if (this.app.env !== 'production'){
+		if (this.app.tests) {
 			indexFiles.push('tests/index.html');
 		}
 
