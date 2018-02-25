@@ -108,7 +108,7 @@ describe('Addon', function () {
 
             contentFor = addon.contentFor('ember-index-4');
 
-            expect(contentFor).to.be.equal(addon._startMarkerPrefix + '-3' + '<!-- content from string -->' + addon._endMarkerPrefix + '-3');
+            expect(contentFor).to.be.equal(addon._startMarkerPrefix + '-4' + '<!-- content from string -->' + addon._endMarkerPrefix + '-4');
         });
     });
 

@@ -54,7 +54,7 @@ module.exports = {
 				if (content.file && fs.existsSync(contentFilePath)) {
 					strings[key] = startMarker + fs.readFileSync(contentFilePath) + endMarker;
 				} else if(content.string && typeof content.string === 'string') {
-					strings[key] = content.string;
+					strings[key] = startMarker + content.string + endMarker;
 				} else {
 					if(content.file) {
 						console.error(('ember-index addon: Cannot find ' + contentFilePath).red);						
