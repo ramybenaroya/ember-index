@@ -38,10 +38,17 @@ module.exports = function(environment) {
         includeInIndexHtml: false
       }, {
         key: '4',
-        file: '_emberIndexContent/file3.txt',
+        file: '_emberIndexContent/file4.txt',
         includeInOutput: true,
         includeInIndexHtml: false
-      }, {
+      },
+      {
+        key: '5',
+        string: '<!-- content from string -->',
+        includeInOutput: false,
+        includeInIndexHtml: true
+      }, 
+      {
         key: 'coloring-script',
         file: '_emberIndexContent/coloring-script.txt',
         includeInOutput: false,

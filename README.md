@@ -39,7 +39,7 @@ module.exports = function(environment) {
         includeInOutput: false,
       },{
         key: '2',
-        file: 'example2.txt',
+        string: 'My Text',
         includeInIndexHtml: false,
         includeInOutput: true,
       }]
