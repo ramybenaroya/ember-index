@@ -7,7 +7,7 @@ var util = require('util');
 
 var mergeTrees = require('broccoli-merge-trees');
 var funnel = require('broccoli-funnel');
-var replaceString = require('broccoli-string-replace');
+var replaceString = require('broccoli-replace');
 
 var assign = require('object-assign');
 var colors = require('colors');
@@ -127,19 +127,23 @@ module.exports = {
 
           renamedIndexTree = replaceString(renamedIndexTree, {
 						files: file,
-						pattern: {
-							match: content.includeInOutput ? markersRegExp : injectedContentRegExp,
-							replacement: ''
-						}
+						patterns: [
+							{
+								match: content.includeInOutput ? markersRegExp : injectedContentRegExp,
+								replacement: ''
+							}
+						]
 					});
 				}
 
 				indexTree = replaceString(indexTree, {
 					files: indexFiles,
-					pattern: {
-						match: content.includeInIndexHtml ? markersRegExp : injectedContentRegExp,
-						replacement: ''
-					}
+					patterns: [
+						{
+							match: content.includeInIndexHtml ? markersRegExp : injectedContentRegExp,
+							replacement: ''
+						}
+					]
 				});
 
 			}, this);
