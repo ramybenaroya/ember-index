@@ -24,7 +24,7 @@ function findEmberIndex(app) {
 describe('Addon', function () {
     var builder;
 
-    this.timeout(15000);
+    this.timeout(60000);
 
     afterEach(function () {
         if (builder) {
