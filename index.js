@@ -5,11 +5,9 @@ var fs = require('fs');
 var path = require('path');
 var util = require('util');
 
-var renameFiles = require('broccoli-rename-files');
 var mergeTrees = require('broccoli-merge-trees');
 var funnel = require('broccoli-funnel');
-var removeFiles = require('broccoli-file-remover');
-var replaceString = require('broccoli-string-replace');
+var replaceString = require('broccoli-replace');
 
 var assign = require('object-assign');
 var colors = require('colors');
@@ -99,13 +97,12 @@ module.exports = {
 
 		if (this.options.enabled && type === 'all') {
 			if (this.options.output) {
-				renamedIndexTree = renameFiles(funnel(tree, {
+				renamedIndexTree = funnel(tree, {
 					srcDir: '.',
 					files: ['index.html'],
-					destDir: this.options.destDir || '.'
-				}), {
-					transformFilename: function() {
-						return this.options.output;
+					destDir: this.options.destDir || '.',
+					getDestinationPath: function() {
+							return this.options.output;
 					}.bind(this)
 				});
 			}
@@ -130,19 +127,23 @@ module.exports = {
 
           renamedIndexTree = replaceString(renamedIndexTree, {
 						files: file,
-						pattern: {
-							match: content.includeInOutput ? markersRegExp : injectedContentRegExp,
-							replacement: ''
-						}
+						patterns: [
+							{
+								match: content.includeInOutput ? markersRegExp : injectedContentRegExp,
+								replacement: ''
+							}
+						]
 					});
 				}
 
 				indexTree = replaceString(indexTree, {
 					files: indexFiles,
-					pattern: {
-						match: content.includeInIndexHtml ? markersRegExp : injectedContentRegExp,
-						replacement: ''
-					}
+					patterns: [
+						{
+							match: content.includeInIndexHtml ? markersRegExp : injectedContentRegExp,
+							replacement: ''
+						}
+					]
 				});
 
 			}, this);
